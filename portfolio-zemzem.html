@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio - Emir Zemzem</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&display=swap');
+        body {
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #000;
+            color: #fff;
+            text-align: center;
+            overflow-x: hidden;
+        }
+        header {
+            background: rgba(0, 0, 0, 0.9);
+            padding: 20px;
+            font-size: 20px;
+        }
+        nav ul {
+            list-style: none;
+            padding: 0;
+        }
+        nav ul li {
+            display: inline;
+            margin: 0 15px;
+        }
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+        nav ul li a:hover {
+            color: #e82127;
+        }
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            margin: 10px;
+            background: #e82127;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: transform 0.3s ease, background 0.3s;
+        }
+        .btn:hover {
+            background: #b71c1c;
+            transform: scale(1.1);
+        }
+        section {
+            padding: 60px;
+            border-bottom: 1px solid #444;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 1s ease-out, transform 1s ease-out;
+        }
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        footer {
+            padding: 20px;
+            background: #111;
+        }
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #000, #111, #222, #000);
+            background-size: 400% 400%;
+            animation: gradientBG 10s infinite alternate;
+            z-index: -1;
+        }
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
+        }
+    </style>
+</head>
+<body>
+    <div class="animated-bg"></div>
+    <header>
+        <h1>Emir Zemzem</h1>
+        <nav>
+            <ul>
+                <li><a href="#cv">CV</a></li>
+                <li><a href="#motivation">Lettre de Motivation</a></li>
+                <li><a href="#competences">Compétences Techniques</a></li>
+                <li><a href="#projets">Projets Informatiques</a></li>
+                <li><a href="#veille">Veille Technologique</a></li>
+                <li><a href="#referentiel">Référentiel</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <section id="cv" class="fade-in">
+        <h2>Mon CV</h2>
+        <a href="file:///C:/Users/zemze/Downloads/CV_2025-02-04_Emir_Zemzem.pdf" class="btn">Télécharger mon CV</a>
+    </section>
+    
+    <section id="motivation" class="fade-in">
+        <h2>Lettre de Motivation</h2>
+        <p>Lettre de motivation en cours...</p>
+        <a href="#" class="btn">Ajouter un fichier PDF</a>
+    </section>
+    
+    <section id="competences" class="fade-in">
+        <h2>Compétences Techniques</h2>
+        <p>Développement Web, Programmation en Python, Bases de données, Cybersécurité...</p>
+    </section>
+    
+    <section id="projets" class="fade-in">
+        <h2>Projets Informatiques</h2>
+        <p>Liste de projets : site e-commerce, portfolio interactif, application mobile...</p>
+    </section>
+    
+    <section id="veille" class="fade-in">
+        <h2>Veille Technologique</h2>
+        <p>Mon sujet de veille technologique : <strong>La robotique domestique</strong></p>
+    </section>
+    
+    <section id="referentiel" class="fade-in">
+        <h2>Référentiel BTS</h2>
+        <p>Référentiel en cours d'ajout...</p>
+    </section>
+    
+    <section id="contact" class="fade-in">
+        <h2>Contact</h2>
+        <p>Email : <a href="mailto:zemzememir89@gmail.com">zemzememir89@gmail.com</a></p>
+    </section>
+    
+    <footer>
+        <p>Portfolio de Emir Zemzem | Inspiré par <a href="https://www.tesla.com/fr_fr" target="_blank">Tesla</a></p>
+        <p><a href="https://institutionsaintaspais.fr/">Lien vers l'Institution Saint Aspais</a></p>
+    </footer>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const sections = document.querySelectorAll("section");
+            sections.forEach((section, index) => {
+                setTimeout(() => {
+                    section.classList.add("visible");
+                }, index * 200);
+            });
+        });
+    </script>
+</body>
+</html>
+
+
