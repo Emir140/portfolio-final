@@ -1,157 +1,506 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio - Emir Zemzem</title>
-    <link rel="stylesheet" href="styles.css">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&display=swap');
-        body {
-            font-family: 'Montserrat', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #000;
-            color: #fff;
-            text-align: center;
-            overflow-x: hidden;
-        }
-        header {
-            background: rgba(0, 0, 0, 0.9);
-            padding: 20px;
-            font-size: 20px;
-        }
-        nav ul {
-            list-style: none;
-            padding: 0;
-        }
-        nav ul li {
-            display: inline;
-            margin: 0 15px;
-        }
-        nav ul li a {
-            color: #fff;
-            text-decoration: none;
-            font-weight: bold;
-            transition: color 0.3s;
-        }
-        nav ul li a:hover {
-            color: #e82127;
-        }
-        .btn {
-            display: inline-block;
-            padding: 12px 24px;
-            margin: 10px;
-            background: #e82127;
-            color: #fff;
-            text-decoration: none;
-            border-radius: 5px;
-            transition: transform 0.3s ease, background 0.3s;
-        }
-        .btn:hover {
-            background: #b71c1c;
-            transform: scale(1.1);
-        }
-        section {
-            padding: 60px;
-            border-bottom: 1px solid #444;
-            opacity: 0;
-            transform: translateY(50px);
-            transition: opacity 1s ease-out, transform 1s ease-out;
-        }
-        section.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        footer {
-            padding: 20px;
-            background: #111;
-        }
-        .animated-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(45deg, #000, #111, #222, #000);
-            background-size: 400% 400%;
-            animation: gradientBG 10s infinite alternate;
-            z-index: -1;
-        }
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            100% { background-position: 100% 50%; }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio - Emir Zemzem</title>
+
+<style>
+
+/* ========================
+   VARIABLES
+======================== */
+
+:root{
+    --bg:#0d0f14;
+    --bg2:#151922;
+    --accent:#4f8cff;
+    --text:#e6e9ef;
+    --muted:#8b93a7;
+    --border:rgba(255,255,255,0.08);
+}
+
+/* ========================
+   GLOBAL
+======================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family: 'Inter', sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    overflow-x:hidden;
+}
+
+section{
+    padding:120px 12%;
+    position:relative;
+}
+
+h2{
+    font-size:2.2rem;
+    margin-bottom:2rem;
+    position:relative;
+}
+
+h2::after{
+    content:"";
+    display:block;
+    width:0;
+    height:2px;
+    background:var(--accent);
+    margin-top:10px;
+    animation:lineGrow 1.2s ease forwards;
+}
+
+@keyframes lineGrow{
+    to{width:60px;}
+}
+
+/* ========================
+   NAVBAR
+======================== */
+
+nav{
+    position:fixed;
+    top:0;
+    width:100%;
+    padding:1.2rem 12%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    background:rgba(13,15,20,0.85);
+    backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--border);
+    z-index:1000;
+}
+
+nav h1{
+    font-weight:600;
+    letter-spacing:1px;
+}
+
+nav ul{
+    list-style:none;
+    display:flex;
+    gap:2rem;
+}
+
+nav a{
+    text-decoration:none;
+    color:var(--muted);
+    font-size:0.9rem;
+    position:relative;
+    transition:0.4s;
+}
+
+nav a::after{
+    content:"";
+    position:absolute;
+    bottom:-5px;
+    left:0;
+    width:0;
+    height:2px;
+    background:var(--accent);
+    transition:0.4s;
+}
+
+nav a:hover{
+    color:var(--text);
+}
+
+nav a:hover::after{
+    width:100%;
+}
+
+/* ========================
+   HERO
+======================== */
+
+.hero{
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    animation:fadeUp 1.2s ease;
+}
+
+.hero h2{
+    font-size:3rem;
+    margin-bottom:1.5rem;
+}
+
+.hero p{
+    max-width:650px;
+    color:var(--muted);
+    line-height:1.6;
+    margin-bottom:2rem;
+}
+
+.btn-group{
+    display:flex;
+    gap:1rem;
+    flex-wrap:wrap;
+}
+
+.btn{
+    padding:12px 24px;
+    border:1px solid var(--accent);
+    color:var(--accent);
+    text-decoration:none;
+    font-size:0.9rem;
+    transition:0.4s;
+    position:relative;
+    overflow:hidden;
+}
+
+.btn::before{
+    content:"";
+    position:absolute;
+    top:0;
+    left:-100%;
+    width:100%;
+    height:100%;
+    background:var(--accent);
+    transition:0.4s;
+    z-index:-1;
+}
+
+.btn:hover{
+    color:#fff;
+}
+
+.btn:hover::before{
+    left:0;
+}
+
+/* ========================
+   ANIMATIONS GENERALES
+======================== */
+
+@keyframes fadeUp{
+    from{
+        opacity:0;
+        transform:translateY(40px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+/* ========================
+   COMPETENCES
+======================== */
+
+.skills{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:2rem;
+}
+
+.skill{
+    padding:1.5rem;
+    border:1px solid var(--border);
+    transition:0.4s;
+    animation:fadeUp 1s ease;
+}
+
+.skill:hover{
+    transform:translateY(-8px);
+    border-color:var(--accent);
+}
+
+.bar{
+    margin-top:12px;
+    height:6px;
+    background:#1e2330;
+    overflow:hidden;
+}
+
+.bar span{
+    display:block;
+    height:100%;
+    width:0;
+    background:var(--accent);
+    animation:fill 2s ease forwards;
+}
+
+@keyframes fill{
+    to{width:var(--level);}
+}
+
+/* ========================
+   PROJETS
+======================== */
+
+.projects{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:2rem;
+}
+
+.project{
+    padding:2rem;
+    border:1px solid var(--border);
+    transition:0.5s;
+    animation:fadeUp 1.2s ease;
+}
+
+.project:hover{
+    transform:translateY(-10px);
+    border-color:var(--accent);
+}
+
+.report-buttons{
+    margin-top:2rem;
+    display:flex;
+    gap:1rem;
+    flex-wrap:wrap;
+}
+
+/* ========================
+   BTS
+======================== */
+
+.bts p{
+    margin-bottom:1rem;
+    color:var(--muted);
+    animation:fadeUp 1.2s ease;
+}
+
+.bts a{
+    color:var(--accent);
+    text-decoration:none;
+}
+
+/* ========================
+   VEILLE
+======================== */
+
+.timeline{
+    border-left:2px solid var(--accent);
+    padding-left:2rem;
+}
+
+.timeline-item{
+    margin-bottom:2rem;
+    animation:fadeUp 1.3s ease;
+}
+
+/* ========================
+   CONTACT
+======================== */
+
+.contact-form{
+    max-width:500px;
+    display:flex;
+    flex-direction:column;
+    gap:1rem;
+}
+
+input,textarea{
+    padding:10px;
+    background:var(--bg2);
+    border:1px solid var(--border);
+    color:var(--text);
+    transition:0.3s;
+}
+
+input:focus,textarea:focus{
+    border-color:var(--accent);
+    outline:none;
+}
+
+footer{
+    text-align:center;
+    padding:2rem;
+    border-top:1px solid var(--border);
+    color:var(--muted);
+}
+
+/* ========================
+   RESPONSIVE
+======================== */
+
+@media(max-width:768px){
+
+    section{
+        padding:100px 8%;
+    }
+
+    nav ul{
+        display:none;
+    }
+
+    .hero h2{
+        font-size:2.2rem;
+    }
+
+}
+
+</style>
 </head>
+
 <body>
-    <div class="animated-bg"></div>
-    <header>
-        <h1>Portfolio de Emir ZEMZEM</h1>
-        <nav>
-            <ul>
-                <li><a href="#cv">CV</a></li>
-                <li><a href="#motivation">Lettre de Motivation</a></li>
-                <li><a href="#competences">Compétences Techniques</a></li>
-                <li><a href="#projets">Projets Informatiques</a></li>
-                <li><a href="#veille">Veille Technologique</a></li>
-                <li><a href="#referentiel">Référentiel</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </nav>
-    </header>
-    
-    <section id="cv" class="fade-in">
-        <h2>Mon CV</h2>
-        <a href="https://github.com/Emir140/portfolio-final/raw/main/CV%20ZEMZEM%20Emir%20STAGE.pdf" class="btn">Télécharger mon CV</a>
-    </section>
-    
-    <section id="motivation" class="fade-in">
-        <h2>Lettre de Motivation</h2>
-        <a href="https://github.com/Emir140/portfolio-final/raw/main/LETTRE%20DE%20MOTIVATION%20ZEMZEM%20Emir%20STAGE.pdf" class="btn">Télécharger ma lettre de motivation</a>
-    </section>
-    
-    <section id="competences" class="fade-in">
-        <h2>Compétences Techniques</h2>
-        <p>Développement Web, Programmation en Python, Bases de données, Cybersécurité...</p>
-    </section>
-    
-    <section id="projets" class="fade-in">
-        <h2>Projets Informatiques</h2>
-        <p>Liste de projets : portfolio interactif,...</p>
-    </section>
-    
-    <section id="veille" class="fade-in">
-        <h2>Veille Technologique</h2>
-        <p>Mon sujet de veille technologique : <strong>La robotique domestique</strong></p>
-    </section>
-    
-    <section id="referentiel" class="fade-in">
-        <h2>Référentiel BTS</h2>
-        <p>Référentiel en cours d'ajout...</p>
-    </section>
-    
-    <section id="contact" class="fade-in">
-        <h2>Contact</h2>
-        <p>Email : <a href="mailto:zemzememir89@gmail.com">zemzememir89@gmail.com</a></p>
-    </section>
-    
-    <footer>
-        <p>Portfolio de Emir Zemzem
-        <p><a href="https://institutionsaintaspais.fr/">Lien vers l'Institution Saint Aspais</a></p>
-    </footer>
-    
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const sections = document.querySelectorAll("section");
-            sections.forEach((section, index) => {
-                setTimeout(() => {
-                    section.classList.add("visible");
-                }, index * 200);
-            });
-        });
-    </script>
+
+<nav>
+    <h1>Emir Zemzem</h1>
+    <ul>
+        <li><a href="#presentation">Présentation</a></li>
+        <li><a href="#competences">Compétences</a></li>
+        <li><a href="#projets">Projets</a></li>
+        <li><a href="#bts">BTS SIO</a></li>
+        <li><a href="#veille">Veille</a></li>
+        <li><a href="#contact">Contact</a></li>
+    </ul>
+</nav>
+
+<section id="presentation" class="hero">
+    <h2>Développeur Web – BTS SIO SLAM</h2>
+    <p>
+        Je suis Emir Zemzem, étudiant en BTS SIO option SLAM. 
+        Passionné par le développement web, l'administration système 
+        et la virtualisation, je développe des solutions modernes, 
+        optimisées et structurées.
+    </p>
+
+    <div class="btn-group">
+        <a href="CV_EmirZEMZEM.pdf" class="btn">Voir le CV</a>
+        <a href="LETTRE DE MOTIVATION ZEMZEM Emir STAGE.pdf" class="btn">Lettre de motivation</a>
+    </div>
+</section>
+
+<section id="competences">
+    <h2>Compétences Techniques</h2>
+
+    <div class="skills">
+        <div class="skill">
+            HTML
+            <div class="bar"><span style="--level:90%"></span></div>
+        </div>
+        <div class="skill">
+            CSS
+            <div class="bar"><span style="--level:85%"></span></div>
+        </div>
+        <div class="skill">
+            PHP
+            <div class="bar"><span style="--level:75%"></span></div>
+        </div>
+        <div class="skill">
+            MySQL
+            <div class="bar"><span style="--level:70%"></span></div>
+        </div>
+        <div class="skill">
+            Apache / Linux
+            <div class="bar"><span style="--level:80%"></span></div>
+        </div>
+        <div class="skill">
+            Virtualisation
+            <div class="bar"><span style="--level:75%"></span></div>
+        </div>
+        <div class="skill">
+            Gestion de projet
+            <div class="bar"><span style="--level:85%"></span></div>
+        </div>
+    </div>
+</section>
+
+<section id="projets">
+    <h2>Projets Informatiques</h2>
+
+    <div class="projects">
+        <div class="project">
+            <h3>Site Koo2fourchette</h3>
+            <p>Site web dynamique avec gestion de base de données.</p>
+        </div>
+
+        <div class="project">
+            <h3>Site RestoCampus</h3>
+            <p>Application web de gestion de restauration étudiante.</p>
+        </div>
+    </div>
+
+    <div class="report-buttons">
+        <a href="ZEMZEM-Emir-rapport de stage-SIO1.pdf" class="btn">Rapport de stage 1</a>
+        <a href="ZEMZEM-Emir-rapport de stage-SIO2.pdf" class="btn">Rapport de stage 2</a>
+    </div>
+</section>
+
+<section id="bts">
+    <h2>BTS SIO</h2>
+
+    <div class="bts">
+        <p><strong>Présentation :</strong> Formation spécialisée en informatique.</p>
+        <p><strong>Option SLAM :</strong> Développement d’applications.</p>
+        <p><strong>Compétences :</strong> Programmation, bases de données, cybersécurité.</p>
+        <p><strong>Débouchés :</strong> Développeur web, logiciel, technicien systèmes.</p>
+        <p>
+            Référentiel :
+            <a href="https://www.francecompetences.fr/recherche/rncp/40792/" target="_blank">
+                France Compétences
+            </a>
+        </p>
+        <p>
+            Campus :
+            <a href="https://institutionsaintaspais.fr/campus/" target="_blank">
+                Campus Saint Aspais
+            </a>
+        </p>
+    </div>
+</section>
+
+<section id="veille">
+    <h2>Veille Technologique – Robotique domestique</h2>
+
+    <div class="timeline">
+        <div class="timeline-item">
+            <strong>Définition :</strong> Robots intelligents pour tâches domestiques.
+        </div>
+        <div class="timeline-item">
+            <strong>Enjeux :</strong> Automatisation et assistance.
+        </div>
+        <div class="timeline-item">
+            <strong>Évolution :</strong> IA et IoT intégrés.
+        </div>
+        <div class="timeline-item">
+            <strong>Exemples :</strong> Robots aspirateurs, assistants connectés.
+        </div>
+        <div class="timeline-item">
+            <strong>Intérêt :</strong> Passion pour l’innovation technologique.
+        </div>
+    </div>
+</section>
+
+<section id="contact">
+    <h2>Contact</h2>
+
+    <p>Email :
+        <a href="mailto:zemzememir89@gmail.com" style="color:var(--accent);">
+            zemzememir89@gmail.com
+        </a>
+    </p>
+
+    <form class="contact-form">
+        <input type="text" placeholder="Nom" required>
+        <input type="email" placeholder="Email" required>
+        <textarea rows="5" placeholder="Message" required></textarea>
+        <button class="btn">Envoyer</button>
+    </form>
+</section>
+
+<footer>
+    © 2026 - Emir Zemzem
+</footer>
+
 </body>
 </html>
-
-
