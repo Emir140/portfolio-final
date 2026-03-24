@@ -1,506 +1,530 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Portfolio - Emir Zemzem</title>
-
-<style>
-
-/* ========================
-   VARIABLES
-======================== */
-
-:root{
-    --bg:#0d0f14;
-    --bg2:#151922;
-    --accent:#4f8cff;
-    --text:#e6e9ef;
-    --muted:#8b93a7;
-    --border:rgba(255,255,255,0.08);
-}
-
-/* ========================
-   GLOBAL
-======================== */
-
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
-
-html{
-    scroll-behavior:smooth;
-}
-
-body{
-    font-family: 'Inter', sans-serif;
-    background:var(--bg);
-    color:var(--text);
-    overflow-x:hidden;
-}
-
-section{
-    padding:120px 12%;
-    position:relative;
-}
-
-h2{
-    font-size:2.2rem;
-    margin-bottom:2rem;
-    position:relative;
-}
-
-h2::after{
-    content:"";
-    display:block;
-    width:0;
-    height:2px;
-    background:var(--accent);
-    margin-top:10px;
-    animation:lineGrow 1.2s ease forwards;
-}
-
-@keyframes lineGrow{
-    to{width:60px;}
-}
-
-/* ========================
-   NAVBAR
-======================== */
-
-nav{
-    position:fixed;
-    top:0;
-    width:100%;
-    padding:1.2rem 12%;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    background:rgba(13,15,20,0.85);
-    backdrop-filter:blur(12px);
-    border-bottom:1px solid var(--border);
-    z-index:1000;
-}
-
-nav h1{
-    font-weight:600;
-    letter-spacing:1px;
-}
-
-nav ul{
-    list-style:none;
-    display:flex;
-    gap:2rem;
-}
-
-nav a{
-    text-decoration:none;
-    color:var(--muted);
-    font-size:0.9rem;
-    position:relative;
-    transition:0.4s;
-}
-
-nav a::after{
-    content:"";
-    position:absolute;
-    bottom:-5px;
-    left:0;
-    width:0;
-    height:2px;
-    background:var(--accent);
-    transition:0.4s;
-}
-
-nav a:hover{
-    color:var(--text);
-}
-
-nav a:hover::after{
-    width:100%;
-}
-
-/* ========================
-   HERO
-======================== */
-
-.hero{
-    min-height:100vh;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    animation:fadeUp 1.2s ease;
-}
-
-.hero h2{
-    font-size:3rem;
-    margin-bottom:1.5rem;
-}
-
-.hero p{
-    max-width:650px;
-    color:var(--muted);
-    line-height:1.6;
-    margin-bottom:2rem;
-}
-
-.btn-group{
-    display:flex;
-    gap:1rem;
-    flex-wrap:wrap;
-}
-
-.btn{
-    padding:12px 24px;
-    border:1px solid var(--accent);
-    color:var(--accent);
-    text-decoration:none;
-    font-size:0.9rem;
-    transition:0.4s;
-    position:relative;
-    overflow:hidden;
-}
-
-.btn::before{
-    content:"";
-    position:absolute;
-    top:0;
-    left:-100%;
-    width:100%;
-    height:100%;
-    background:var(--accent);
-    transition:0.4s;
-    z-index:-1;
-}
-
-.btn:hover{
-    color:#fff;
-}
-
-.btn:hover::before{
-    left:0;
-}
-
-/* ========================
-   ANIMATIONS GENERALES
-======================== */
-
-@keyframes fadeUp{
-    from{
-        opacity:0;
-        transform:translateY(40px);
-    }
-    to{
-        opacity:1;
-        transform:translateY(0);
-    }
-}
-
-/* ========================
-   COMPETENCES
-======================== */
-
-.skills{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-    gap:2rem;
-}
-
-.skill{
-    padding:1.5rem;
-    border:1px solid var(--border);
-    transition:0.4s;
-    animation:fadeUp 1s ease;
-}
-
-.skill:hover{
-    transform:translateY(-8px);
-    border-color:var(--accent);
-}
-
-.bar{
-    margin-top:12px;
-    height:6px;
-    background:#1e2330;
-    overflow:hidden;
-}
-
-.bar span{
-    display:block;
-    height:100%;
-    width:0;
-    background:var(--accent);
-    animation:fill 2s ease forwards;
-}
-
-@keyframes fill{
-    to{width:var(--level);}
-}
-
-/* ========================
-   PROJETS
-======================== */
-
-.projects{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-    gap:2rem;
-}
-
-.project{
-    padding:2rem;
-    border:1px solid var(--border);
-    transition:0.5s;
-    animation:fadeUp 1.2s ease;
-}
-
-.project:hover{
-    transform:translateY(-10px);
-    border-color:var(--accent);
-}
-
-.report-buttons{
-    margin-top:2rem;
-    display:flex;
-    gap:1rem;
-    flex-wrap:wrap;
-}
-
-/* ========================
-   BTS
-======================== */
-
-.bts p{
-    margin-bottom:1rem;
-    color:var(--muted);
-    animation:fadeUp 1.2s ease;
-}
-
-.bts a{
-    color:var(--accent);
-    text-decoration:none;
-}
-
-/* ========================
-   VEILLE
-======================== */
-
-.timeline{
-    border-left:2px solid var(--accent);
-    padding-left:2rem;
-}
-
-.timeline-item{
-    margin-bottom:2rem;
-    animation:fadeUp 1.3s ease;
-}
-
-/* ========================
-   CONTACT
-======================== */
-
-.contact-form{
-    max-width:500px;
-    display:flex;
-    flex-direction:column;
-    gap:1rem;
-}
-
-input,textarea{
-    padding:10px;
-    background:var(--bg2);
-    border:1px solid var(--border);
-    color:var(--text);
-    transition:0.3s;
-}
-
-input:focus,textarea:focus{
-    border-color:var(--accent);
-    outline:none;
-}
-
-footer{
-    text-align:center;
-    padding:2rem;
-    border-top:1px solid var(--border);
-    color:var(--muted);
-}
-
-/* ========================
-   RESPONSIVE
-======================== */
-
-@media(max-width:768px){
-
-    section{
-        padding:100px 8%;
-    }
-
-    nav ul{
-        display:none;
-    }
-
-    .hero h2{
-        font-size:2.2rem;
-    }
-
-}
-
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio - Emir Zemzem - BTS SIO SLAM</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #18bc9c;
+            --bg-light: #f4f7fa;
+            --text-dark: #333;
+            --shadow: 0 10px 30px rgba(0,0,0,0.08);
+        }
+        * { box-sizing: border-box; }
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+        #bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+        header {
+            background: linear-gradient(135deg, var(--primary), #34495e);
+            color: #fff;
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow);
+            transition: all 0.4s ease;
+        }
+        header.scrolled {
+            background: rgba(44, 62, 80, 0.97);
+            padding: 0.8rem 0;
+        }
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 0;
+            padding: 0;
+        }
+        nav li { margin: 0 1.2rem; }
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            padding: 0.4rem 0;
+        }
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--secondary);
+            transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        nav a:hover::after { width: 100%; }
+        section {
+            padding: 7rem 2rem 6rem;
+            max-width: 1280px;
+            margin: 0 auto;
+            opacity: 0;
+            transform: translateY(60px);
+            transition: all 1s cubic-bezier(0.25, 0.1, 0.25, 1);
+        }
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        h1, h2 {
+            color: var(--primary);
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+        h1::after, h2::after {
+            content: '';
+            position: absolute;
+            bottom: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(to right, var(--secondary), #3498db);
+            border-radius: 2px;
+            transition: width 0.6s ease;
+        }
+        h1:hover::after, h2:hover::after { width: 120px; }
+        #accueil {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 140px 2rem 100px;
+            position: relative;
+        }
+        #accueil h1 {
+            font-size: 3.8rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 5px 25px rgba(255,255,255,0.7);
+            color: var(--primary);
+        }
+        #accueil p {
+            font-size: 1.35rem;
+            max-width: 780px;
+            margin-bottom: 3rem;
+            opacity: 0.9;
+        }
+        .hero-btn {
+            background: var(--secondary);
+            color: #fff;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 8px 25px rgba(24,188,156,0.3);
+            transition: all 0.4s ease;
+        }
+        .hero-btn:hover {
+            transform: translateY(-6px) scale(1.05);
+            box-shadow: 0 15px 35px rgba(24,188,156,0.4);
+        }
+        .projects-grid, .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+        }
+        .project-card, .skill-card {
+            background: #fff;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 4px;
+            background: linear-gradient(to right, var(--secondary), #3498db);
+            transform: scaleX(0);
+            transition: transform 0.5s ease;
+        }
+        .project-card:hover::before { transform: scaleX(1); }
+        .project-card:hover, .skill-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+        }
+        .skill-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--secondary);
+            transition: transform 0.6s ease;
+        }
+        .skill-card:hover .skill-icon { transform: rotate(12deg) scale(1.15); }
+        .download-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--primary);
+            color: #fff;
+            padding: 0.9rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.4s ease;
+            box-shadow: 0 6px 20px rgba(44,62,80,0.25);
+        }
+        .download-link:hover {
+            background: var(--secondary);
+            transform: translateY(-4px);
+        }
+        .procedures-list li {
+            background: #fff;
+            padding: 1.4rem 1.8rem;
+            border-radius: 14px;
+            margin-bottom: 1rem;
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+            transition: all 0.4s ease;
+        }
+        .procedures-list li:hover {
+            transform: translateX(15px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+        #contact form {
+            background: #fff;
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            max-width: 680px;
+            margin: 0 auto;
+        }
+        #contact input, #contact textarea {
+            width: 100%;
+            padding: 1.2rem;
+            margin-bottom: 1.5rem;
+            border: 2px solid #eee;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+        #contact input:focus, #contact textarea:focus {
+            border-color: var(--secondary);
+            box-shadow: 0 0 0 4px rgba(24,188,156,0.15);
+        }
+        #contact button {
+            width: 100%;
+            background: var(--secondary);
+            color: white;
+            padding: 1.3rem;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.4s ease;
+        }
+        #contact button:hover {
+            background: #16a085;
+            transform: scale(1.03);
+        }
+        footer {
+            background: linear-gradient(135deg, var(--primary), #34495e);
+            color: #fff;
+            text-align: center;
+            padding: 3rem 1rem;
+            margin-top: 5rem;
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(80px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
 </head>
-
 <body>
+    <!-- Fond animé subtil -->
+    <canvas id="bg-canvas"></canvas>
 
-<nav>
-    <h1>Emir Zemzem</h1>
-    <ul>
-        <li><a href="#presentation">Présentation</a></li>
-        <li><a href="#competences">Compétences</a></li>
-        <li><a href="#projets">Projets</a></li>
-        <li><a href="#bts">BTS SIO</a></li>
-        <li><a href="#veille">Veille</a></li>
-        <li><a href="#contact">Contact</a></li>
-    </ul>
-</nav>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="#accueil"><i class="fas fa-home"></i> Accueil</a></li>
+                <li><a href="#parcours"><i class="fas fa-road"></i> Parcours</a></li>
+                <li><a href="#competences"><i class="fas fa-tools"></i> Compétences</a></li>
+                <li><a href="#projets"><i class="fas fa-project-diagram"></i> Projets</a></li>
+                <li><a href="#formation"><i class="fas fa-graduation-cap"></i> Formation</a></li>
+                <li><a href="#procedures"><i class="fas fa-cogs"></i> Procédures</a></li>
+                <li><a href="#stages"><i class="fas fa-briefcase"></i> Stages</a></li>
+                <li><a href="#cv"><i class="fas fa-file-alt"></i> CV & LM</a></li>
+                <li><a href="#certifications"><i class="fas fa-certificate"></i> Certifications</a></li>
+                <li><a href="#veille"><i class="fas fa-eye"></i> Veille</a></li>
+                <li><a href="#contact"><i class="fas fa-envelope"></i> Contact</a></li>
+            </ul>
+        </nav>
+    </header>
 
-<section id="presentation" class="hero">
-    <h2>Développeur Web – BTS SIO SLAM</h2>
-    <p>
-        Je suis Emir Zemzem, étudiant en BTS SIO option SLAM. 
-        Passionné par le développement web, l'administration système 
-        et la virtualisation, je développe des solutions modernes, 
-        optimisées et structurées.
-    </p>
-
-    <div class="btn-group">
-        <a href="CV_EmirZEMZEM.pdf" class="btn">Voir le CV</a>
-        <a href="LETTRE DE MOTIVATION ZEMZEM Emir STAGE.pdf" class="btn">Lettre de motivation</a>
-    </div>
-</section>
-
-<section id="competences">
-    <h2>Compétences Techniques</h2>
-
-    <div class="skills">
-        <div class="skill">
-            HTML
-            <div class="bar"><span style="--level:90%"></span></div>
-        </div>
-        <div class="skill">
-            CSS
-            <div class="bar"><span style="--level:85%"></span></div>
-        </div>
-        <div class="skill">
-            PHP
-            <div class="bar"><span style="--level:75%"></span></div>
-        </div>
-        <div class="skill">
-            MySQL
-            <div class="bar"><span style="--level:70%"></span></div>
-        </div>
-        <div class="skill">
-            Apache / Linux
-            <div class="bar"><span style="--level:80%"></span></div>
-        </div>
-        <div class="skill">
-            Virtualisation
-            <div class="bar"><span style="--level:75%"></span></div>
-        </div>
-        <div class="skill">
-            Gestion de projet
-            <div class="bar"><span style="--level:85%"></span></div>
-        </div>
-    </div>
-</section>
-
-<section id="projets">
-    <h2>Projets Informatiques</h2>
-
-    <div class="projects">
-        <div class="project">
-            <h3>Site Koo2fourchette</h3>
-            <p>Site web dynamique avec gestion de base de données.</p>
-        </div>
-
-        <div class="project">
-            <h3>Site RestoCampus</h3>
-            <p>Application web de gestion de restauration étudiante.</p>
-        </div>
-    </div>
-
-    <div class="report-buttons">
-        <a href="ZEMZEM-Emir-rapport de stage-SIO1.pdf" class="btn">Rapport de stage 1</a>
-        <a href="ZEMZEM-Emir-rapport de stage-SIO2.pdf" class="btn">Rapport de stage 2</a>
-    </div>
-</section>
-
-<section id="bts">
-    <h2>BTS SIO</h2>
-
-    <div class="bts">
-        <p><strong>Présentation :</strong> Formation spécialisée en informatique.</p>
-        <p><strong>Option SLAM :</strong> Développement d’applications.</p>
-        <p><strong>Compétences :</strong> Programmation, bases de données, cybersécurité.</p>
-        <p><strong>Débouchés :</strong> Développeur web, logiciel, technicien systèmes.</p>
-        <p>
-            Référentiel :
-            <a href="https://www.francecompetences.fr/recherche/rncp/40792/" target="_blank">
-                France Compétences
-            </a>
-        </p>
-        <p>
-            Campus :
-            <a href="https://institutionsaintaspais.fr/campus/" target="_blank">
-                Campus Saint Aspais
-            </a>
-        </p>
-    </div>
-</section>
-
-<section id="veille">
-    <h2>Veille Technologique – Robotique domestique</h2>
-
-    <div class="timeline">
-        <div class="timeline-item">
-            <strong>Définition :</strong> Robots intelligents pour tâches domestiques.
-        </div>
-        <div class="timeline-item">
-            <strong>Enjeux :</strong> Automatisation et assistance.
-        </div>
-        <div class="timeline-item">
-            <strong>Évolution :</strong> IA et IoT intégrés.
-        </div>
-        <div class="timeline-item">
-            <strong>Exemples :</strong> Robots aspirateurs, assistants connectés.
-        </div>
-        <div class="timeline-item">
-            <strong>Intérêt :</strong> Passion pour l’innovation technologique.
-        </div>
-    </div>
-</section>
-
-<section id="contact">
-    <h2>Contact</h2>
-
-    <p>Email :
-        <a href="mailto:zemzememir89@gmail.com" style="color:var(--accent);">
-            zemzememir89@gmail.com
+    <section id="accueil">
+        <h1>Emir Zemzem</h1>
+        <p>Étudiant en 2ᵉ année de BTS SIO – Option SLAM<br>Passionné par le développement d’applications et les solutions logicielles innovantes</p>
+        <a href="#contact" class="hero-btn">
+            <i class="fas fa-paper-plane"></i> Me contacter
         </a>
-    </p>
+    </section>
 
-    <form class="contact-form">
-        <input type="text" placeholder="Nom" required>
-        <input type="email" placeholder="Email" required>
-        <textarea rows="5" placeholder="Message" required></textarea>
-        <button class="btn">Envoyer</button>
-    </form>
-</section>
+    <section id="parcours">
+        <h2>Parcours Professionnel</h2>
+        <div class="projects-grid">
+            <div class="project-card">
+                <i class="fas fa-school skill-icon" style="font-size:2.8rem;"></i>
+                <h3>Baccalauréat STMG (2021-2023)</h3>
+                <p>Lycée Polyvalent Etienne Bezout – Nemours</p>
+            </div>
+            <div class="project-card">
+                <i class="fas fa-university skill-icon" style="font-size:2.8rem;"></i>
+                <h3>BTS Services Informatiques aux Organisations (2024-2026)</h3>
+                <p>Institution Saint-Aspais – Melun</p>
+            </div>
+        </div>
+    </section>
 
-<footer>
-    © 2026 - Emir Zemzem
-</footer>
+    <section id="competences">
+        <h2>Compétences Techniques</h2>
+        <div class="skills-grid">
+            <div class="skill-card"><i class="fab fa-html5 skill-icon"></i><h3>HTML5 / CSS3</h3></div>
+            <div class="skill-card"><i class="fab fa-js skill-icon"></i><h3>JavaScript</h3></div>
+            <div class="skill-card"><i class="fab fa-php skill-icon"></i><h3>PHP</h3></div>
+            <div class="skill-card"><i class="fas fa-database skill-icon"></i><h3>SQL & MySQL</h3></div>
+            <div class="skill-card"><i class="fab fa-git-alt skill-icon"></i><h3>Git / GitHub</h3></div>
+            <div class="skill-card"><i class="fab fa-react skill-icon"></i><h3>React.js</h3></div>
+            <div class="skill-card"><i class="fas fa-shield-alt skill-icon"></i><h3>Cybersécurité</h3></div>
+        </div>
+    </section>
 
+    <section id="projets">
+        <h2>Projets Informatiques</h2>
+        <div class="projects-grid">
+            <div class="project-card">
+                <i class="fas fa-utensils skill-icon"></i>
+                <h3>Koo2Fourchette</h3>
+                <p>Plateforme de partage de recettes.</p>
+            </div>
+            <div class="project-card">
+                <i class="fas fa-store skill-icon"></i>
+                <h3>Resto Campus</h3>
+                <p>Application de gestion de restaurant scolaire (commandes, menus, stocks). Projet collaboratif en équipe.</p>
+                <a href="https://github.com/CTbien/RestoCampus" target="_blank" class="download-link" style="margin-top:1.5rem;">
+                    <i class="fab fa-github"></i> Voir sur GitHub
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section id="formation">
+        <h2>Résumé de la Formation BTS SIO</h2>
+        <p>Le BTS SIO forme des techniciens supérieurs capables de répondre aux besoins informatiques des organisations. L’option SLAM (Solutions Logicielles et Applications Métiers) met l’accent sur le développement d’applications et la gestion de données.</p>
+        <a href="https://www.francecompetences.fr/recherche/rncp/40792/" target="_blank" class="download-link">📄 Référentiel Officiel BTS SIO</a>
+        <a href="https://institutionsaintaspais.fr/campus/" target="_blank" class="download-link" style="margin-left:1rem;">🏫 Campus Saint-Aspais</a>
+    </section>
+
+    <section id="procedures">
+        <h2>Procédures Informatiques Réalisées</h2>
+        <ul class="procedures-list">
+            <li><i class="fas fa-code" style="color:var(--secondary);font-size:2rem;"></i> Développement full-stack (PHP / JS / React)</li>
+            <li><i class="fas fa-database" style="color:var(--secondary);font-size:2rem;"></i> Conception & administration de bases de données</li>
+            <li><i class="fas fa-server" style="color:var(--secondary);font-size:2rem;"></i> Mise en place de serveurs web (Apache)</li>
+            <li><i class="fab fa-git-alt" style="color:var(--secondary);font-size:2rem;"></i> Gestion de versions : Utilisation de Git (GitHub/GitLab) pour le versionnage du code et la gestion des branches</li>
+            <li><i class="fas fa-desktop" style="color:var(--secondary);font-size:2rem;"></i> Virtualisation : Création et gestion de machines virtuelles</li>
+            <li><i class="fas fa-shield-alt" style="color:var(--secondary);font-size:2rem;"></i> Mise en œuvre de la cybersécurité applicative</li>
+        </ul>
+    </section>
+
+    <section id="stages">
+        <h2>Rapports de Stages</h2>
+        <p><a href="ZEMZEM-Emir-rapport de stage-SIO1.pdf" download class="download-link"><i class="fas fa-download"></i> Rapport de Stage – 1ère année</a></p>
+        <p><a href="ZEMZEM-Emir-rapport de stage-SIO2.pdf" download class="download-link"><i class="fas fa-download"></i> Rapport de Stage – 2ème année</a></p>
+    </section>
+
+    <section id="cv">
+        <h2>CV & Lettre de Motivation</h2>
+        <p><a href="CV_EmirZEMZEM.pdf" download class="download-link"><i class="fas fa-file-pdf"></i> Télécharger mon CV</a></p>
+        <p><a href="LETTRE DE MOTIVATION ZEMZEM Emir STAGE.pdf" download class="download-link"><i class="fas fa-file-pdf"></i> Télécharger ma Lettre de Motivation</a></p>
+    </section>
+
+    <section id="certifications">
+        <h2>Certifications & Attestations</h2>
+        <p><a href="Attestationmooc.pdf" download class="download-link"><i class="fas fa-certificate"></i> Attestation MOOC</a></p>
+        <p><a href="certification-pix-20260211.pdf" download class="download-link"><i class="fas fa-certificate"></i> Certification Pix</a></p>
+    </section>
+
+    <section id="veille">
+        <h2>Veille Technologique</h2>
+        <a href="https://docs.google.com/document/d/11Xd38d4ZTphTBhA3tnPsDEuRdz9vHisE5zS9V-Z0a4o/edit?usp=sharing" target="_blank" class="download-link">
+            <i class="fas fa-external-link-alt"></i> Accéder à ma veille 
+        </a>
+    </section>
+
+    <section id="contact">
+        <h2>Contactez-moi</h2>
+        <p style="text-align:center;margin-bottom:2rem;">zemzememir89@gmail.com</p>
+        <form id="contact-form">
+            <input type="text" id="name" placeholder="Votre nom" required>
+            <input type="email" id="email" placeholder="Votre email" required>
+            <textarea id="message" rows="6" placeholder="Votre message..." required></textarea>
+            <button type="submit"><i class="fas fa-paper-plane"></i> Envoyer le message</button>
+        </form>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 Emir Zemzem – BTS SIO SLAM • Saint-Aspais Melun</p>
+        <p style="margin-top:0.8rem;opacity:0.8;">
+            <a href="https://www.francecompetences.fr/recherche/rncp/40792/" target="_blank">Référentiel BTS SIO</a> • 
+            <a href="https://institutionsaintaspais.fr/campus/" target="_blank">Institution Saint-Aspais</a>
+        </p>
+    </footer>
+
+    <script>
+        // ====================== PARTICLES BACKGROUND ======================
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        let w, h;
+
+        class Particle {
+            constructor() {
+                this.reset();
+            }
+            reset() {
+                this.x = Math.random() * w;
+                this.y = Math.random() * h;
+                this.size = Math.random() * 2.8 + 1.2;
+                this.speedX = Math.random() * 0.6 - 0.3;
+                this.speedY = Math.random() * 0.6 - 0.3;
+                this.opacity = Math.random() * 0.25 + 0.08;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.x < 0 || this.x > w) this.speedX *= -1;
+                if (this.y < 0 || this.y > h) this.speedY *= -1;
+            }
+            draw() {
+                ctx.save();
+                ctx.globalAlpha = this.opacity;
+                ctx.fillStyle = (Math.random() > 0.5) ? '#18bc9c' : '#2c3e50';
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
+            }
+        }
+
+        function resize() {
+            w = window.innerWidth;
+            h = window.innerHeight;
+            canvas.width = w;
+            canvas.height = h;
+        }
+
+        function initParticles() {
+            particles = [];
+            const count = Math.floor(Math.min(w * h / 9000, 140)); // ~100-140 selon écran
+            for (let i = 0; i < count; i++) {
+                particles.push(new Particle());
+            }
+        }
+
+        function connectParticles() {
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+                    if (distance < 130) {
+                        ctx.save();
+                        ctx.globalAlpha = (1 - distance / 130) * 0.07;
+                        ctx.strokeStyle = '#18bc9c';
+                        ctx.lineWidth = 0.8;
+                        ctx.beginPath();
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.stroke();
+                        ctx.restore();
+                    }
+                }
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, w, h);
+            for (let p of particles) {
+                p.update();
+                p.draw();
+            }
+            connectParticles();
+            requestAnimationFrame(animate);
+        }
+
+        // ====================== AUTRES INTERACTIONS ======================
+        window.addEventListener('resize', () => {
+            resize();
+            initParticles();
+        });
+
+        // Scroll animations + header
+        const sections = document.querySelectorAll('section');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('visible');
+            });
+        }, { threshold: 0.12 });
+
+        sections.forEach(section => observer.observe(section));
+
+        window.addEventListener('scroll', () => {
+            document.querySelector('header').classList.toggle('scrolled', window.scrollY > 80);
+        });
+
+        // Formulaire
+        document.getElementById('contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('✅ Message envoyé avec succès ! (simulation – vous pouvez connecter un vrai backend)');
+            this.reset();
+        });
+
+        // Lancement
+        resize();
+        initParticles();
+        animate();
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(link => {
+            link.addEventListener('click', e => {
+                e.preventDefault();
+                document.querySelector(link.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
 </body>
 </html>
