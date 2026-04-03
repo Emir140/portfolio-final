@@ -3,434 +3,493 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio - Emir Zemzem - BTS SIO SLAM</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <title>Portfolio - Emir Zemzem - Développeur Web</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary: #2c3e50;
-            --secondary: #18bc9c;
-            --bg-light: #f4f7fa;
-            --text-dark: #333;
-            --shadow: 0 10px 30px rgba(0,0,0,0.08);
+            --primary: #0f172a; /* Bleu nuit très moderne */
+            --secondary: #3b82f6; /* Bleu électrique pro */
+            --accent: #10b981; /* Vert émeraude pour les validations/SLAM */
+            --bg-light: #f8fafc;
+            --text-dark: #334155;
+            --text-muted: #64748b;
+            --card-bg: #ffffff;
+            --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            --radius: 16px;
+            --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        * { box-sizing: border-box; }
+
+        * { box-sizing: border-box; scroll-behavior: smooth; }
+
         body {
-            font-family: 'Roboto', sans-serif;
+            font-family: 'Poppins', sans-serif;
             margin: 0;
             padding: 0;
             background-color: var(--bg-light);
             color: var(--text-dark);
-            line-height: 1.7;
+            line-height: 1.6;
             overflow-x: hidden;
         }
+
+        /* Arrière-plan animé */
         #bg-canvas {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            pointer-events: none;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1; pointer-events: none;
         }
+
+        /* --- HEADER & NAV --- */
         header {
-            background: linear-gradient(135deg, var(--primary), #34495e);
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
             color: #fff;
-            padding: 1rem 0;
+            padding: 1.2rem 0;
             position: fixed;
             width: 100%;
-            top: 0;
-            z-index: 1000;
-            box-shadow: var(--shadow);
-            transition: all 0.4s ease;
+            top: 0; z-index: 1000;
+            transition: var(--transition);
         }
         header.scrolled {
-            background: rgba(44, 62, 80, 0.97);
             padding: 0.8rem 0;
+            box-shadow: var(--shadow-md);
         }
         nav ul {
-            list-style: none;
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin: 0;
-            padding: 0;
+            list-style: none; display: flex; justify-content: center;
+            flex-wrap: wrap; margin: 0; padding: 0; gap: 1.5rem;
         }
-        nav li { margin: 0 1.2rem; }
         nav a {
-            color: #fff;
-            text-decoration: none;
-            font-weight: 500;
-            position: relative;
-            padding: 0.4rem 0;
+            color: #cbd5e1; text-decoration: none; font-weight: 500;
+            font-size: 0.95rem; position: relative; padding: 0.5rem 0;
+            transition: color 0.3s ease;
         }
+        nav a:hover { color: #fff; }
         nav a::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--secondary);
-            transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            content: ''; position: absolute; bottom: 0; left: 0;
+            width: 0; height: 2px; background: var(--secondary);
+            transition: width 0.3s ease;
         }
         nav a:hover::after { width: 100%; }
+
+        /* --- SECTIONS GLOBALES --- */
         section {
-            padding: 7rem 2rem 6rem;
-            max-width: 1280px;
+            padding: 8rem 2rem 4rem;
+            max-width: 1200px;
             margin: 0 auto;
-            opacity: 0;
-            transform: translateY(60px);
-            transition: all 1s cubic-bezier(0.25, 0.1, 0.25, 1);
+            opacity: 0; transform: translateY(40px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
         }
-        section.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        h1, h2 {
+        section.visible { opacity: 1; transform: translateY(0); }
+
+        h2 {
             color: var(--primary);
-            text-align: center;
-            margin-bottom: 3rem;
-            position: relative;
+            font-size: 2.2rem; text-align: center;
+            margin-bottom: 3rem; position: relative;
         }
-        h1::after, h2::after {
-            content: '';
-            position: absolute;
-            bottom: -12px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 60px;
-            height: 4px;
-            background: linear-gradient(to right, var(--secondary), #3498db);
-            border-radius: 2px;
-            transition: width 0.6s ease;
+        h2::after {
+            content: ''; display: block; width: 60px; height: 4px;
+            background: var(--secondary); margin: 15px auto 0; border-radius: 2px;
         }
-        h1:hover::after, h2:hover::after { width: 120px; }
+
+        /* --- ACCUEIL --- */
         #accueil {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 140px 2rem 100px;
-            position: relative;
+            min-height: 100vh; display: flex; flex-direction: column;
+            justify-content: center; align-items: center; text-align: center;
+            padding-top: 0;
+        }
+        .badge-pro {
+            background: rgba(59, 130, 246, 0.1); color: var(--secondary);
+            padding: 0.5rem 1.2rem; border-radius: 50px; font-weight: 600;
+            font-size: 0.9rem; margin-bottom: 1.5rem; border: 1px solid rgba(59, 130, 246, 0.2);
         }
         #accueil h1 {
-            font-size: 3.8rem;
-            font-weight: 700;
-            margin-bottom: 1.5rem;
-            text-shadow: 0 5px 25px rgba(255,255,255,0.7);
-            color: var(--primary);
+            font-size: 4rem; font-weight: 700; color: var(--primary);
+            margin: 0 0 1rem 0; letter-spacing: -1px;
         }
-        #accueil p {
-            font-size: 1.35rem;
-            max-width: 780px;
-            margin-bottom: 3rem;
-            opacity: 0.9;
+        #accueil p { font-size: 1.2rem; color: var(--text-muted); max-width: 600px; margin-bottom: 2.5rem; }
+
+        /* --- BOUTONS --- */
+        .btn {
+            background: var(--secondary); color: #fff;
+            padding: 0.8rem 1.8rem; border-radius: 50px; text-decoration: none;
+            font-weight: 500; display: inline-flex; align-items: center; gap: 8px;
+            transition: var(--transition); border: none; cursor: pointer;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
         }
-        .hero-btn {
-            background: var(--secondary);
-            color: #fff;
-            padding: 1rem 2.5rem;
-            border-radius: 50px;
-            font-size: 1.1rem;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
-            box-shadow: 0 8px 25px rgba(24,188,156,0.3);
-            transition: all 0.4s ease;
+        .btn:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4); }
+        .btn-outline {
+            background: transparent; border: 2px solid var(--primary);
+            color: var(--primary); box-shadow: none;
         }
-        .hero-btn:hover {
-            transform: translateY(-6px) scale(1.05);
-            box-shadow: 0 15px 35px rgba(24,188,156,0.4);
+        .btn-outline:hover { background: var(--primary); color: #fff; }
+
+        /* --- GRILLES & CARTES --- */
+        .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2rem; }
+        .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; }
+        
+        .card {
+            background: var(--card-bg); padding: 2rem; border-radius: var(--radius);
+            box-shadow: var(--shadow-sm); transition: var(--transition);
+            border: 1px solid rgba(0,0,0,0.05); height: 100%;
+            display: flex; flex-direction: column;
         }
-        .projects-grid, .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 2.5rem;
+        .card:hover { transform: translateY(-10px); box-shadow: var(--shadow-md); }
+        .card-icon { font-size: 2.5rem; color: var(--secondary); margin-bottom: 1.5rem; }
+        .card h3 { margin-top: 0; color: var(--primary); font-size: 1.3rem; }
+        
+        /* --- FORMATION SLAM HIGHLIGHT --- */
+        .card.slam-highlight {
+            border: 2px solid var(--accent);
+            box-shadow: 0 10px 30px rgba(16, 185, 129, 0.15);
+            position: relative; overflow: hidden;
         }
-        .project-card, .skill-card {
-            background: #fff;
-            border-radius: 16px;
-            padding: 2rem;
-            box-shadow: var(--shadow);
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            overflow: hidden;
+        .card.slam-highlight::before {
+            content: 'Mon Choix'; position: absolute; top: 15px; right: -30px;
+            background: var(--accent); color: white; padding: 5px 30px;
+            transform: rotate(45deg); font-size: 0.8rem; font-weight: bold;
         }
-        .project-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 4px;
-            background: linear-gradient(to right, var(--secondary), #3498db);
-            transform: scaleX(0);
+        .card.slam-highlight .card-icon { color: var(--accent); }
+
+        /* --- COMPETENCES --- */
+        .skill-item {
+            display: flex; align-items: center; gap: 15px;
+            padding: 1rem 1.5rem; background: #fff; border-radius: 12px;
+            box-shadow: var(--shadow-sm); transition: var(--transition);
+        }
+        .skill-item:hover { transform: translateX(10px); border-left: 4px solid var(--secondary); }
+        .skill-item i { font-size: 1.8rem; color: var(--secondary); width: 40px; text-align: center; }
+        .skill-item h4 { margin: 0; font-size: 1.1rem; }
+
+        /* --- PROJETS --- */
+        .project-card { padding: 0; overflow: hidden; }
+        .project-img-container {
+            width: 100%; height: 200px; background: #e2e8f0;
+            display: flex; align-items: center; justify-content: center;
+            color: var(--text-muted); position: relative; overflow: hidden;
+        }
+        .project-img-container img {
+            width: 100%; height: 100%; object-fit: cover;
             transition: transform 0.5s ease;
         }
-        .project-card:hover::before { transform: scaleX(1); }
-        .project-card:hover, .skill-card:hover {
-            transform: translateY(-15px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+        .project-card:hover .project-img-container img { transform: scale(1.05); }
+        .project-content { padding: 1.5rem; display: flex; flex-direction: column; flex-grow: 1; }
+        .project-tags { display: flex; gap: 8px; margin-bottom: 1rem; flex-wrap: wrap; }
+        .tag { background: #f1f5f9; color: var(--text-muted); padding: 4px 10px; border-radius: 6px; font-size: 0.8rem; font-weight: 500; }
+        .project-content p { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 1.5rem; flex-grow: 1; }
+        
+        /* --- STAGES --- */
+        .timeline { border-left: 3px solid #e2e8f0; padding-left: 2rem; margin-left: 1rem; }
+        .timeline-item { position: relative; margin-bottom: 3rem; }
+        .timeline-item::before {
+            content: ''; position: absolute; left: -2.75rem; top: 0;
+            width: 20px; height: 20px; background: var(--secondary);
+            border: 4px solid #fff; border-radius: 50%; box-shadow: var(--shadow-sm);
         }
-        .skill-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            color: var(--secondary);
-            transition: transform 0.6s ease;
+        .timeline-date { color: var(--secondary); font-weight: 600; font-size: 0.9rem; margin-bottom: 0.5rem; }
+        .timeline-content { background: #fff; padding: 1.5rem; border-radius: var(--radius); box-shadow: var(--shadow-sm); }
+
+        /* --- CONTACT --- */
+        .contact-wrapper { max-width: 600px; margin: 0 auto; background: #fff; padding: 2.5rem; border-radius: var(--radius); box-shadow: var(--shadow-lg); }
+        .form-group { margin-bottom: 1.5rem; }
+        input, textarea {
+            width: 100%; padding: 1rem; border: 1px solid #cbd5e1;
+            border-radius: 8px; font-family: inherit; transition: var(--transition);
+            background: #f8fafc;
         }
-        .skill-card:hover .skill-icon { transform: rotate(12deg) scale(1.15); }
-        .download-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            background: var(--primary);
-            color: #fff;
-            padding: 0.9rem 2rem;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.4s ease;
-            box-shadow: 0 6px 20px rgba(44,62,80,0.25);
-        }
-        .download-link:hover {
-            background: var(--secondary);
-            transform: translateY(-4px);
-        }
-        .procedures-list li {
-            background: #fff;
-            padding: 1.4rem 1.8rem;
-            border-radius: 14px;
-            margin-bottom: 1rem;
-            box-shadow: var(--shadow);
-            display: flex;
-            align-items: center;
-            gap: 1.2rem;
-            transition: all 0.4s ease;
-        }
-        .procedures-list li:hover {
-            transform: translateX(15px);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
-        }
-        #contact form {
-            background: #fff;
-            padding: 3rem;
-            border-radius: 20px;
-            box-shadow: var(--shadow);
-            max-width: 680px;
-            margin: 0 auto;
-        }
-        #contact input, #contact textarea {
-            width: 100%;
-            padding: 1.2rem;
-            margin-bottom: 1.5rem;
-            border: 2px solid #eee;
-            border-radius: 12px;
-            transition: all 0.3s ease;
-        }
-        #contact input:focus, #contact textarea:focus {
-            border-color: var(--secondary);
-            box-shadow: 0 0 0 4px rgba(24,188,156,0.15);
-        }
-        #contact button {
-            width: 100%;
-            background: var(--secondary);
-            color: white;
-            padding: 1.3rem;
-            border: none;
-            border-radius: 12px;
-            font-size: 1.1rem;
-            cursor: pointer;
-            transition: all 0.4s ease;
-        }
-        #contact button:hover {
-            background: #16a085;
-            transform: scale(1.03);
-        }
+        input:focus, textarea:focus { outline: none; border-color: var(--secondary); background: #fff; box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1); }
+        
         footer {
-            background: linear-gradient(135deg, var(--primary), #34495e);
-            color: #fff;
-            text-align: center;
-            padding: 3rem 1rem;
-            margin-top: 5rem;
+            background: var(--primary); color: #cbd5e1; text-align: center;
+            padding: 3rem 1rem; margin-top: 5rem;
         }
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(80px); }
-            to { opacity: 1; transform: translateY(0); }
+        footer a { color: var(--secondary); text-decoration: none; }
+
+        @media (max-width: 768px) {
+            #accueil h1 { font-size: 2.5rem; }
+            nav ul { gap: 0.5rem; }
+            nav a { font-size: 0.85rem; padding: 0.5rem; }
         }
     </style>
 </head>
 <body>
-    <!-- Fond animé subtil -->
     <canvas id="bg-canvas"></canvas>
 
     <header>
         <nav>
             <ul>
-                <li><a href="#accueil"><i class="fas fa-home"></i> Accueil</a></li>
-                <li><a href="#parcours"><i class="fas fa-road"></i> Parcours</a></li>
-                <li><a href="#competences"><i class="fas fa-tools"></i> Compétences</a></li>
-                <li><a href="#projets"><i class="fas fa-project-diagram"></i> Projets</a></li>
-                <li><a href="#formation"><i class="fas fa-graduation-cap"></i> Formation</a></li>
-                <li><a href="#procedures"><i class="fas fa-cogs"></i> Procédures</a></li>
-                <li><a href="#stages"><i class="fas fa-briefcase"></i> Stages</a></li>
-                <li><a href="#cv"><i class="fas fa-file-alt"></i> CV & LM</a></li>
-                <li><a href="#certifications"><i class="fas fa-certificate"></i> Certifications</a></li>
-                <li><a href="#veille"><i class="fas fa-eye"></i> Veille</a></li>
-                <li><a href="#contact"><i class="fas fa-envelope"></i> Contact</a></li>
+                <li><a href="#accueil">Accueil</a></li>
+                <li><a href="#parcours">Parcours</a></li>
+                <li><a href="#formation">Formation</a></li>
+                <li><a href="#competences">Compétences</a></li>
+                <li><a href="#procedures">Procédures</a></li>
+                <li><a href="#projets">Projets</a></li>
+                <li><a href="#stages">Stages</a></li>
+                <li><a href="#veille">Veille</a></li>
+                <li><a href="#contact">Contact</a></li>
             </ul>
         </nav>
     </header>
 
     <section id="accueil">
+        <div class="badge-pro">BTS SIO Option SLAM</div>
         <h1>Emir Zemzem</h1>
-        <p>Étudiant en 2ᵉ année de BTS SIO – Option SLAM<br>Passionné par le développement d’applications et les solutions logicielles innovantes</p>
-        <a href="#contact" class="hero-btn">
-            <i class="fas fa-paper-plane"></i> Me contacter
-        </a>
+        <p>Passionné par le code et la résolution de problèmes complexes, je conçois des applications web et des solutions logicielles performantes, ergonomiques et sécurisées.</p>
+        <div style="display:flex; gap:15px; justify-content:center; flex-wrap:wrap;">
+            <a href="#projets" class="btn"><i class="fas fa-laptop-code"></i> Voir mes projets</a>
+            <a href="CV_EmirZEMZEM.pdf" download class="btn btn-outline"><i class="fas fa-file-pdf"></i> Mon CV</a>
+        </div>
     </section>
 
     <section id="parcours">
-        <h2>Parcours Professionnel</h2>
-        <div class="projects-grid">
-            <div class="project-card">
-                <i class="fas fa-school skill-icon" style="font-size:2.8rem;"></i>
-                <h3>Baccalauréat STMG (2021-2023)</h3>
-                <p>Lycée Polyvalent Etienne Bezout – Nemours</p>
+        <h2>Parcours & Profil</h2>
+        <div class="grid-2">
+            <div class="card">
+                <i class="fas fa-university card-icon"></i>
+                <h3>BTS SIO (2024-2026)</h3>
+                <p><strong>Institution Saint-Aspais – Melun</strong></p>
+                <p>Services Informatiques aux Organisations, spécialité SLAM. Apprentissage approfondi du développement full-stack et de la gestion de BDD.</p>
             </div>
-            <div class="project-card">
-                <i class="fas fa-university skill-icon" style="font-size:2.8rem;"></i>
-                <h3>BTS Services Informatiques aux Organisations (2024-2026)</h3>
-                <p>Institution Saint-Aspais – Melun</p>
+            <div class="card">
+                <i class="fas fa-school card-icon"></i>
+                <h3>Baccalauréat STMG (2021-2023)</h3>
+                <p><strong>Lycée Polyvalent Etienne Bezout – Nemours</strong></p>
+                <p>Sciences et Technologies du Management et de la Gestion. Base solide en gestion d'entreprise, utile pour comprendre les besoins métiers en informatique.</p>
+            </div>
+        </div>
+        <div style="text-align: center; margin-top: 3rem;">
+            <p style="margin-bottom: 1.5rem; color: var(--text-muted);">Intéressé par mon profil pour une alternance ou un stage ?</p>
+            <a href="CV_EmirZEMZEM.pdf" download class="btn"><i class="fas fa-download"></i> Télécharger mon CV</a>
+            <a href="LETTRE_DE_MOTIVATION_ZEMZEM_Emir_STAGE.pdf" download class="btn btn-outline" style="margin-left: 10px;"><i class="fas fa-envelope-open-text"></i> Lettre de motivation</a>
+        </div>
+    </section>
+
+    <section id="formation">
+        <h2>La formation BTS SIO</h2>
+        <p style="text-align:center; max-width:800px; margin:0 auto 3rem; color:var(--text-muted);">
+            Le Brevet de Technicien Supérieur aux Services Informatiques aux Organisations forme aux métiers d'administrateur réseau ou de développeur. La formation se divise en deux spécialités dès le second semestre :
+        </p>
+        <div class="grid-2">
+            <div class="card">
+                <i class="fas fa-network-wired card-icon" style="color:var(--text-muted);"></i>
+                <h3 style="color:var(--text-muted);">Option SISR</h3>
+                <p><em>Solutions d'Infrastructure, Systèmes et Réseaux</em></p>
+                <p>Administration des systèmes et réseaux, cybersécurité des infrastructures, support technique et maintenance du parc informatique.</p>
+            </div>
+            <div class="card slam-highlight">
+                <i class="fas fa-code card-icon"></i>
+                <h3>Option SLAM</h3>
+                <p><em>Solutions Logicielles et Applications Métiers</em></p>
+                <p>Conception et développement d'applications (web, mobile, desktop), gestion de bases de données, cybersécurité applicative et intégration de services.</p>
             </div>
         </div>
     </section>
 
     <section id="competences">
         <h2>Compétences Techniques</h2>
-        <div class="skills-grid">
-            <div class="skill-card"><i class="fab fa-html5 skill-icon"></i><h3>HTML5 / CSS3</h3></div>
-            <div class="skill-card"><i class="fab fa-js skill-icon"></i><h3>JavaScript</h3></div>
-            <div class="skill-card"><i class="fab fa-php skill-icon"></i><h3>PHP</h3></div>
-            <div class="skill-card"><i class="fas fa-database skill-icon"></i><h3>SQL & MySQL</h3></div>
-            <div class="skill-card"><i class="fab fa-git-alt skill-icon"></i><h3>Git / GitHub</h3></div>
-            <div class="skill-card"><i class="fab fa-react skill-icon"></i><h3>React.js</h3></div>
-            <div class="skill-card"><i class="fas fa-shield-alt skill-icon"></i><h3>Cybersécurité</h3></div>
+        <div class="grid-3">
+            <div class="skill-item"><i class="fab fa-html5" style="color:#e34f26;"></i><h4>HTML5 / CSS3</h4></div>
+            <div class="skill-item"><i class="fab fa-js" style="color:#f7df1e;"></i><h4>JavaScript</h4></div>
+            <div class="skill-item"><i class="fab fa-php" style="color:#777bb4;"></i><h4>PHP</h4></div>
+            <div class="skill-item"><i class="fab fa-symfony" style="color:#000000;"></i><h4>Symfony</h4></div>
+            <div class="skill-item"><i class="fas fa-database" style="color:#336791;"></i><h4>SQL / MySQL</h4></div>
+            <div class="skill-item"><i class="fab fa-git-alt" style="color:#f05032;"></i><h4>Git & GitHub</h4></div>
+            <div class="skill-item"><i class="fas fa-shield-alt" style="color:var(--accent);"></i><h4>Cybersécurité</h4></div>
+        </div>
+
+        <h3 style="text-align:center; margin-top:4rem; color:var(--primary);">Certifications</h3>
+        <div style="display:flex; justify-content:center; gap:20px; flex-wrap:wrap; margin-top:2rem;">
+            <a href="Attestationmooc.pdf" download class="btn btn-outline"><i class="fas fa-award"></i> Attestation MOOC SecNum Académie</a>
+            <a href="certification-pix-20260211.pdf" download class="btn btn-outline"><i class="fas fa-award"></i> Certification Pix</a>
+        </div>
+    </section>
+
+    <section id="procedures">
+        <h2>Procédures & Savoir-Faire</h2>
+        <div class="grid-2">
+            <div class="skill-item"><i class="fas fa-laptop-code"></i><h4>Développement Full-Stack (MVC, POO)</h4></div>
+            <div class="skill-item"><i class="fas fa-server"></i><h4>Mise en place de serveurs web (Apache)</h4></div>
+            <div class="skill-item"><i class="fas fa-project-diagram"></i><h4>Modélisation & Administration BDD</h4></div>
+            <div class="skill-item"><i class="fas fa-code-branch"></i><h4>Versionning & Travail collaboratif (Git)</h4></div>
+            <div class="skill-item"><i class="fas fa-desktop"></i><h4>Virtualisation d'environnements</h4></div>
+            <div class="skill-item"><i class="fas fa-lock"></i><h4>Sécurisation des applications web</h4></div>
         </div>
     </section>
 
     <section id="projets">
-        <h2>Projets Informatiques</h2>
-        <div class="projects-grid">
-            <div class="project-card">
-                <i class="fas fa-utensils skill-icon"></i>
-                <h3>Koo2Fourchette</h3>
-                <p>Plateforme de partage de recettes.</p>
+        <h2>Mes Projets</h2>
+        <div class="grid-3">
+            
+            <div class="card project-card">
+                <div class="project-img-container">
+                    <i class="fas fa-image fa-3x" style="opacity: 0.2;"></i>
+                    <span style="position:absolute; bottom:10px; font-size:0.8rem; opacity:0.5;">Espace Image : Koo2Fourchette</span>
+                </div>
+                <div class="project-content">
+                    <h3>Koo2Fourchette</h3>
+                    <div class="project-tags">
+                        <span class="tag">PHP</span><span class="tag">MySQL</span>
+                    </div>
+                    <p>Plateforme web de partage de recettes de cuisine entre passionnés.</p>
+                </div>
             </div>
-            <div class="project-card">
-                <i class="fas fa-store skill-icon"></i>
-                <h3>Resto Campus</h3>
-                <p>Application de gestion de restaurant scolaire (commandes, menus, stocks). Projet collaboratif en équipe.</p>
-                <a href="https://github.com/CTbien/RestoCampus" target="_blank" class="download-link" style="margin-top:1.5rem;">
-                    <i class="fab fa-github"></i> Voir sur GitHub
-                </a>
+
+            <div class="card project-card">
+                <div class="project-img-container">
+                    <i class="fas fa-utensils fa-3x" style="opacity: 0.2;"></i>
+                </div>
+                <div class="project-content">
+                    <h3>RestoCampus</h3>
+                    <div class="project-tags">
+                        <span class="tag">Projet en Équipe</span><span class="tag">Web App</span>
+                    </div>
+                    <p>Application de réservation de repas pour le restaurant du campus. Réservation en ligne côté étudiant et tableau de bord en temps réel pour la gestionnaire.</p>
+                    <a href="https://ctbien.alwaysdata.net/restocampus/" target="_blank" class="btn"><i class="fas fa-external-link-alt"></i> Voir le site</a>
+                </div>
             </div>
+
+            <div class="card project-card">
+                <div class="project-img-container">
+                    <i class="fas fa-headset fa-3x" style="opacity: 0.2;"></i>
+                </div>
+                <div class="project-content">
+                    <h3>Campus HelpDesk</h3>
+                    <div class="project-tags">
+                        <span class="tag">Projet en Équipe</span><span class="tag">Ticketing</span>
+                    </div>
+                    <p>Webapp interne de gestion de tickets d'interventions informatiques. Déclaration d'incidents par les étudiants et suivi complet de la résolution par les techniciens.</p>
+                    <a href="https://ctbien.alwaysdata.net/campus_helpdesk/public/auth/login.php" target="_blank" class="btn"><i class="fas fa-external-link-alt"></i> Voir le site</a>
+                </div>
+            </div>
+
+            <div class="card project-card">
+                <div class="project-img-container">
+                    <i class="fas fa-running fa-3x" style="opacity: 0.2;"></i>
+                </div>
+                <div class="project-content">
+                    <h3>CSE (Club Sportif)</h3>
+                    <div class="project-tags">
+                        <span class="tag">Symfony 7.1</span><span class="tag">M2L</span>
+                    </div>
+                    <p>Application de gestion pour la Maison des Ligues de Lorraine. Suivi des performances des adhérents, gestion d'équipes par les entraîneurs et pilotage administratif.</p>
+                    <a href="https://github.com/CTbien/CSE" target="_blank" class="btn btn-outline"><i class="fab fa-github"></i> Code source</a>
+                </div>
+            </div>
+
+            <div class="card project-card">
+                <div class="project-img-container">
+                    <i class="fas fa-pizza-slice fa-3x" style="opacity: 0.2;"></i>
+                </div>
+                <div class="project-content">
+                    <h3>Bella Casa</h3>
+                    <div class="project-tags">
+                        <span class="tag">Projet Perso</span><span class="tag">Vitrine</span>
+                    </div>
+                    <p>Conception et développement du site vitrine pour le restaurant de mes parents. Présentation du menu, horaires et localisation.</p>
+                    <a href="#" target="_blank" class="btn btn-outline"><i class="fas fa-link"></i> Lien à venir</a>
+                </div>
+            </div>
+
         </div>
     </section>
 
-    <section id="formation">
-        <h2>Résumé de la Formation BTS SIO</h2>
-        <p>Le BTS SIO forme des techniciens supérieurs capables de répondre aux besoins informatiques des organisations. L’option SLAM (Solutions Logicielles et Applications Métiers) met l’accent sur le développement d’applications et la gestion de données.</p>
-        <a href="https://www.francecompetences.fr/recherche/rncp/40792/" target="_blank" class="download-link">📄 Référentiel Officiel BTS SIO</a>
-        <a href="https://institutionsaintaspais.fr/campus/" target="_blank" class="download-link" style="margin-left:1rem;">🏫 Campus Saint-Aspais</a>
-    </section>
-
-    <section id="procedures">
-        <h2>Procédures Informatiques Réalisées</h2>
-        <ul class="procedures-list">
-            <li><i class="fas fa-code" style="color:var(--secondary);font-size:2rem;"></i> Développement full-stack (PHP / JS / React)</li>
-            <li><i class="fas fa-database" style="color:var(--secondary);font-size:2rem;"></i> Conception & administration de bases de données</li>
-            <li><i class="fas fa-server" style="color:var(--secondary);font-size:2rem;"></i> Mise en place de serveurs web (Apache)</li>
-            <li><i class="fab fa-git-alt" style="color:var(--secondary);font-size:2rem;"></i> Gestion de versions : Utilisation de Git (GitHub/GitLab) pour le versionnage du code et la gestion des branches</li>
-            <li><i class="fas fa-desktop" style="color:var(--secondary);font-size:2rem;"></i> Virtualisation : Création et gestion de machines virtuelles</li>
-            <li><i class="fas fa-shield-alt" style="color:var(--secondary);font-size:2rem;"></i> Mise en œuvre de la cybersécurité applicative</li>
-        </ul>
-    </section>
-
     <section id="stages">
-        <h2>Rapports de Stages</h2>
-        <p><a href="ZEMZEM-Emir-rapport de stage-SIO1.pdf" download class="download-link"><i class="fas fa-download"></i> Rapport de Stage – 1ère année</a></p>
-        <p><a href="ZEMZEM-Emir-rapport de stage-SIO2.pdf" download class="download-link"><i class="fas fa-download"></i> Rapport de Stage – 2ème année</a></p>
-    </section>
+        <h2>Expériences en Entreprise</h2>
+        <div class="timeline">
+            
+            <div class="timeline-item">
+                <div class="timeline-date">Stage de 2ème année (BTS SIO)</div>
+                <div class="timeline-content">
+                    <h3>Mairie de Bondy – Direction des Systèmes d'Information (DSI)</h3>
+                    <p>Accompagnement de l'équipe informatique dans ses missions quotidiennes : installation et configuration de postes, assistance aux utilisateurs, traitement des tickets via la plateforme <strong>GLPI</strong>, et vérification globale du bon fonctionnement du parc informatique de la ville.</p>
+                    <a href="ZEMZEM-Emir-rapport_de_stage-SIO2.pdf" download class="btn btn-outline" style="margin-top:10px;"><i class="fas fa-file-pdf"></i> Rapport de stage</a>
+                </div>
+            </div>
 
-    <section id="cv">
-        <h2>CV & Lettre de Motivation</h2>
-        <p><a href="CV_EmirZEMZEM.pdf" download class="download-link"><i class="fas fa-file-pdf"></i> Télécharger mon CV</a></p>
-        <p><a href="LETTRE DE MOTIVATION ZEMZEM Emir STAGE.pdf" download class="download-link"><i class="fas fa-file-pdf"></i> Télécharger ma Lettre de Motivation</a></p>
-    </section>
+            <div class="timeline-item">
+                <div class="timeline-date">Stage de 1ère année (BTS SIO)</div>
+                <div class="timeline-content">
+                    <h3>Lesly & Co Holding – Meilleur Plan Cuisine</h3>
+                    <p>Contribution technique au site e-commerce spécialisé dans la vente de plans de travail sur mesure (granit, céramique, quartz, marbre). Intégration de nouveaux produits via le CMS <strong>WordPress</strong> et rédaction de fiches produits optimisées pour le référencement naturel (SEO).</p>
+                    <a href="ZEMZEM-Emir-rapport_de_stage-SIO1.pdf" download class="btn btn-outline" style="margin-top:10px;"><i class="fas fa-file-pdf"></i> Rapport de stage</a>
+                </div>
+            </div>
 
-    <section id="certifications">
-        <h2>Certifications & Attestations</h2>
-        <p><a href="Attestationmooc.pdf" download class="download-link"><i class="fas fa-certificate"></i> Attestation MOOC</a></p>
-        <p><a href="certification-pix-20260211.pdf" download class="download-link"><i class="fas fa-certificate"></i> Certification Pix</a></p>
+        </div>
     </section>
 
     <section id="veille">
         <h2>Veille Technologique</h2>
-        <a href="https://docs.google.com/document/d/11Xd38d4ZTphTBhA3tnPsDEuRdz9vHisE5zS9V-Z0a4o/edit?usp=sharing" target="_blank" class="download-link">
-            <i class="fas fa-external-link-alt"></i> Accéder à ma veille 
-        </a>
+        <div class="card" style="max-width: 800px; margin: 0 auto; text-align: center;">
+            <i class="fas fa-robot card-icon" style="font-size: 3.5rem;"></i>
+            <h3>Sujet : La Robotique Domestique</h3>
+            <p style="text-align: left; margin-bottom: 2rem;">
+                J'ai choisi d'orienter ma veille technologique sur <strong>la robotique domestique</strong>. C'est un domaine fascinant qui connaît une évolution fulgurante grâce à l'Intelligence Artificielle et à l'Internet des Objets (IoT). 
+                <br><br>
+                <strong>Le lien avec l'option SLAM :</strong> La robotique ne se résume pas qu'à la mécanique (hardware). Son intelligence réside dans la couche logicielle. En tant que futur développeur, ce sujet m'intéresse car il fait appel à des notions algorithmiques complexes, à la programmation de comportements automatisés, au traitement de la donnée en temps réel et à la création d'APIs pour permettre aux robots de communiquer avec nos smartphones et nos réseaux domestiques.
+            </p>
+            <a href="https://docs.google.com/document/d/11Xd38d4ZTphTBhA3tnPsDEuRdz9vHisE5zS9V-Z0a4o/edit?usp=sharing" target="_blank" class="btn"><i class="fas fa-book-open"></i> Consulter mon dossier de veille</a>
+        </div>
     </section>
 
     <section id="contact">
-        <h2>Contactez-moi</h2>
-        <p style="text-align:center;margin-bottom:2rem;">zemzememir89@gmail.com</p>
-        <form id="contact-form">
-            <input type="text" id="name" placeholder="Votre nom" required>
-            <input type="email" id="email" placeholder="Votre email" required>
-            <textarea id="message" rows="6" placeholder="Votre message..." required></textarea>
-            <button type="submit"><i class="fas fa-paper-plane"></i> Envoyer le message</button>
-        </form>
+        <h2>Me Contacter</h2>
+        <div class="contact-wrapper">
+            <p style="text-align:center; margin-bottom:2rem; color:var(--text-muted);">
+                <i class="fas fa-envelope" style="color:var(--secondary); margin-right:8px;"></i> zemzememir89@gmail.com
+            </p>
+            <form id="contact-form">
+                <div class="form-group">
+                    <input type="text" id="name" placeholder="Votre nom complet" required>
+                </div>
+                <div class="form-group">
+                    <input type="email" id="email" placeholder="Votre adresse email" required>
+                </div>
+                <div class="form-group">
+                    <textarea id="message" rows="5" placeholder="Comment puis-je vous aider ?" required></textarea>
+                </div>
+                <button type="submit" class="btn" style="width: 100%; justify-content: center; font-size: 1.1rem;">
+                    <i class="fas fa-paper-plane"></i> Envoyer le message
+                </button>
+            </form>
+        </div>
     </section>
 
     <footer>
-        <p>&copy; 2026 Emir Zemzem – BTS SIO SLAM • Saint-Aspais Melun</p>
-        <p style="margin-top:0.8rem;opacity:0.8;">
-            <a href="https://www.francecompetences.fr/recherche/rncp/40792/" target="_blank">Référentiel BTS SIO</a> • 
-            <a href="https://institutionsaintaspais.fr/campus/" target="_blank">Institution Saint-Aspais</a>
+        <p>&copy; 2026 Emir Zemzem – BTS SIO SLAM • Institution Saint-Aspais Melun</p>
+        <p style="font-size: 0.9rem;">
+            <a href="https://www.francecompetences.fr/recherche/rncp/40792/" target="_blank">Référentiel BTS SIO</a> | 
+            <a href="https://institutionsaintaspais.fr/campus/" target="_blank">Campus Saint-Aspais</a>
         </p>
     </footer>
 
     <script>
-        // ====================== PARTICLES BACKGROUND ======================
+        // --- PARTICLES BACKGROUND ---
         const canvas = document.getElementById('bg-canvas');
         const ctx = canvas.getContext('2d');
         let particles = [];
         let w, h;
 
         class Particle {
-            constructor() {
-                this.reset();
-            }
+            constructor() { this.reset(); }
             reset() {
                 this.x = Math.random() * w;
                 this.y = Math.random() * h;
-                this.size = Math.random() * 2.8 + 1.2;
-                this.speedX = Math.random() * 0.6 - 0.3;
-                this.speedY = Math.random() * 0.6 - 0.3;
-                this.opacity = Math.random() * 0.25 + 0.08;
+                this.size = Math.random() * 2 + 1;
+                this.speedX = Math.random() * 0.4 - 0.2;
+                this.speedY = Math.random() * 0.4 - 0.2;
+                this.opacity = Math.random() * 0.3 + 0.1;
             }
             update() {
-                this.x += this.speedX;
-                this.y += this.speedY;
+                this.x += this.speedX; this.y += this.speedY;
                 if (this.x < 0 || this.x > w) this.speedX *= -1;
                 if (this.y < 0 || this.y > h) this.speedY *= -1;
             }
             draw() {
                 ctx.save();
                 ctx.globalAlpha = this.opacity;
-                ctx.fillStyle = (Math.random() > 0.5) ? '#18bc9c' : '#2c3e50';
+                ctx.fillStyle = '#3b82f6';
                 ctx.beginPath();
                 ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
                 ctx.fill();
@@ -439,18 +498,14 @@
         }
 
         function resize() {
-            w = window.innerWidth;
-            h = window.innerHeight;
-            canvas.width = w;
-            canvas.height = h;
+            w = window.innerWidth; h = window.innerHeight;
+            canvas.width = w; canvas.height = h;
         }
 
         function initParticles() {
             particles = [];
-            const count = Math.floor(Math.min(w * h / 9000, 140)); // ~100-140 selon écran
-            for (let i = 0; i < count; i++) {
-                particles.push(new Particle());
-            }
+            const count = Math.floor(Math.min(w * h / 12000, 80));
+            for (let i = 0; i < count; i++) { particles.push(new Particle()); }
         }
 
         function connectParticles() {
@@ -459,11 +514,11 @@
                     const dx = particles[i].x - particles[j].x;
                     const dy = particles[i].y - particles[j].y;
                     const distance = Math.sqrt(dx * dx + dy * dy);
-                    if (distance < 130) {
+                    if (distance < 150) {
                         ctx.save();
-                        ctx.globalAlpha = (1 - distance / 130) * 0.07;
-                        ctx.strokeStyle = '#18bc9c';
-                        ctx.lineWidth = 0.8;
+                        ctx.globalAlpha = (1 - distance / 150) * 0.05;
+                        ctx.strokeStyle = '#3b82f6';
+                        ctx.lineWidth = 1;
                         ctx.beginPath();
                         ctx.moveTo(particles[i].x, particles[i].y);
                         ctx.lineTo(particles[j].x, particles[j].y);
@@ -476,54 +531,36 @@
 
         function animate() {
             ctx.clearRect(0, 0, w, h);
-            for (let p of particles) {
-                p.update();
-                p.draw();
-            }
+            for (let p of particles) { p.update(); p.draw(); }
             connectParticles();
             requestAnimationFrame(animate);
         }
 
-        // ====================== AUTRES INTERACTIONS ======================
-        window.addEventListener('resize', () => {
-            resize();
-            initParticles();
-        });
+        window.addEventListener('resize', () => { resize(); initParticles(); });
+        resize(); initParticles(); animate();
 
-        // Scroll animations + header
+        // --- ANIMATIONS AU SCROLL ---
         const sections = document.querySelectorAll('section');
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-                if (entry.isIntersecting) entry.target.classList.add('visible');
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
             });
-        }, { threshold: 0.12 });
+        }, { threshold: 0.1 });
 
         sections.forEach(section => observer.observe(section));
 
+        // --- HEADER SCROLL EFFECT ---
         window.addEventListener('scroll', () => {
-            document.querySelector('header').classList.toggle('scrolled', window.scrollY > 80);
+            document.querySelector('header').classList.toggle('scrolled', window.scrollY > 50);
         });
 
-        // Formulaire
+        // --- FORMULAIRE ---
         document.getElementById('contact-form').addEventListener('submit', function(e) {
             e.preventDefault();
-            alert('✅ Message envoyé avec succès ! (simulation – vous pouvez connecter un vrai backend)');
+            alert('✅ Message envoyé avec succès ! (Simulation)');
             this.reset();
-        });
-
-        // Lancement
-        resize();
-        initParticles();
-        animate();
-
-        // Smooth scroll
-        document.querySelectorAll('a[href^="#"]').forEach(link => {
-            link.addEventListener('click', e => {
-                e.preventDefault();
-                document.querySelector(link.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
-            });
         });
     </script>
 </body>
